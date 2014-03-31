@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>文档渲染</title>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/bootstrap-responsive.css">
+		<link rel="stylesheet" href="themes/retriever/retriever.css">
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="#">Doc Render Demo</a>
+
+					<div class="navbar-content">
+						<ul class="nav">
+							<li class="active">
+								<a href="#home">Home</a>
+							</li>
+							<li>
+								<a href="#api">API</a>
+							</li>
+							<li>
+								<a href="./custom.html" target="_blank">Customize</a>
+							</li>
+							<li>
+								<a href="./faq.html">FAQ</a>
+							</li>
+						</ul>
+					</div>
+					<div class="btn-group open"></div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="span3 nav-container">
+						<ul id="apiList" class="nav nav-pills nav-stacked">
+							<li>
+								<a href="#home">Home</a>
+							</li>
+							<li>
+								<a href="#howto">How to</a>
+							</li>
+							<li class="nav-header">API</li>
+						</ul>
+					</div>
+				</div>
+				<div class="span9" id="apiContent">
+					<div class="hero-unit" autocomplete="off">
+						<h1>Doc Render Demo</h1>
+
+						<h2>based on yuidoc and bootstrap</h2>
+
+						<p>基于yuidoc输出的文档格式，重新组织与解析出易读易懂的帮助文档，风格使用Bootstrap，可支持换肤
+							<br>
+						</p>
+
+						<p></p>
+
+						<p class="pull-right">
+							<a href="http://pub.idqqimg.com/qqmobile/qqapi.js" download class="btn btn-success">下载API</a>
+							<!-- <a href="http://pub.idqqimg.com/qqmobile/qqapi.uncompressed.js" download class="btn btn-success">下载未压缩版</a> -->
+							<a href="./custom.html" target="_blank" class="btn btn-primary">定制API</a>
+						</p>
+					</div>
+					<hr>
+					<h1 id="howto">HOW TO</h1>
+
+					<div>这里可以写一些Get Start</div>
+					<span class="label label-info">Example</span>
+					<pre class="text-info">docrender.render({
+	apiListWrapper:document.getElementById("apiList"),
+	apiContentWrapper:document.getElementById("apiContent")
+},data);</pre>
+					<h1 id="api">API</h1>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../output/docrender-1.0.js"></script>
+		<script type="text/javascript" src="js/data.js"></script>
+		<script type="text/javascript">
+		//渲染文档
+		docrender.render({
+			apiListWrapper:document.getElementById("apiList"),
+			apiContentWrapper:document.getElementById("apiContent")
+		},data);
+		</script>
+	</body>
+</html>

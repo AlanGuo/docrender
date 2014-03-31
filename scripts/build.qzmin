@@ -1,0 +1,14 @@
+{
+	projects: [	
+			{
+				name :  "docrender.js",
+				target : "../output/docrender-1.0.js",
+				template:[
+					"../lib/template.html"
+				],
+				include : [
+					"../lib/docrender.js"
+				]
+			}
+	]
+}
