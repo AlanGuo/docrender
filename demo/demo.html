@@ -2,16 +2,16 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>文档渲染</title>
-		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="css/bootstrap-responsive.css">
-		<link rel="stylesheet" href="themes/retriever/retriever.css">
+		<title id="docrender_title">文档渲染</title>
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/css/bootstrap.css">
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/css/bootstrap-responsive.css">
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/themes/retriever/retriever.css">
 	</head>
 	<body>
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#">Doc Render Demo</a>
+					<a class="brand" href="#" id="docrender_topbar_title">Doc Render Demo</a>
 
 					<div class="navbar-content">
 						<ul class="nav">
@@ -36,13 +36,13 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span3">
-					<div class="span3 nav-container">
+					<div class="span3 nav-container" style="width:auto">
 						<ul id="apiList" class="nav nav-pills nav-stacked">
 							<li>
 								<a href="#home">Home</a>
 							</li>
 							<li>
-								<a href="#howto">How to</a>
+								<a href="#howto">How to Use</a>
 							</li>
 							<li class="nav-header">API</li>
 						</ul>
@@ -50,46 +50,85 @@
 				</div>
 				<div class="span9" id="apiContent">
 					<div class="hero-unit" autocomplete="off">
-						<h1>Doc Render Demo</h1>
+						<h1 id="docrender_content_title">Doc Render Demo</h1>
 
-						<h2>based on yuidoc and bootstrap</h2>
+						<h2 id="docrender_content_subtitle">based on yuidoc and bootstrap</h2>
 
-						<p>基于yuidoc输出的文档格式，重新组织与解析出易读易懂的帮助文档，风格使用Bootstrap，可支持换肤
+						<p id="docrender_content_description">基于yuidoc输出的文档格式，重新组织与解析出易读易懂的帮助文档，风格使用Bootstrap，可支持换肤
 							<br>
 						</p>
 
 						<p></p>
 
 						<p class="pull-right">
-							<a href="http://pub.idqqimg.com/qqmobile/qqapi.js" download class="btn btn-success">下载API</a>
+							<a href="#" download class="btn btn-success" id="docrender_content_download">下载</a>
 							<!-- <a href="http://pub.idqqimg.com/qqmobile/qqapi.uncompressed.js" download class="btn btn-success">下载未压缩版</a> -->
 							<a href="./custom.html" target="_blank" class="btn btn-primary">定制API</a>
 						</p>
 					</div>
 					<hr>
-					<h1 id="howto">HOW TO</h1>
-
-					<div>这里可以写一些Get Start</div>
+					<h1 id="howto">HOW TO USE</h1>
+					<div id="docrender_content_howtouse"></div>
+					<!--
 					<span class="label label-info">Example</span>
 					<pre class="text-info">docrender.render({
 	apiListWrapper:document.getElementById("apiList"),
 	apiContentWrapper:document.getElementById("apiContent")
-},data);</pre>
+},data);</pre>-->
 					<h1 id="api">API</h1>
 
 				</div>
 			</div>
 		</div>
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="../release/docrender-1.0.js"></script>
-		<script type="text/javascript" src="js/data.js"></script>
+		<script src="http://115.29.195.88:85/assets/js/jquery.min.js"></script>
+		<script src="http://115.29.195.88:85/assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="http://115.29.195.88:85/release/docrender-1.0.js"></script>
+		<script type="text/javascript" src="http://115.29.195.88:85/assets/js/markdown.min.js"></script>
+		<script type="text/javascript" src="./data.json"></script>
 		<script type="text/javascript">
+
+		var docrender_topbar_title = document.getElementById("docrender_topbar_title");
+		var docrender_content_title = document.getElementById("docrender_content_title");
+		var docrender_content_subtitle = document.getElementById("docrender_content_subtitle");
+		var docrender_content_description = document.getElementById("docrender_content_description");
+		var docrender_content_download = document.getElementById("docrender_content_download");
+		var docrender_content_howtouse = document.getElementById("docrender_content_howtouse");
+		var docrender_title = document.getElementById("docrender_title");
+
+		docrender_title.innerText = data.project.name || "";
+		//标题更新
+		if(docrender_topbar_title.innerText){
+			//标题
+			docrender_topbar_title.innerText = data.project.name || "";
+			docrender_content_title.innerText = data.project.name || "";
+			//副标题
+			docrender_content_subtitle.innerText = data.project.subtitle || "";
+			//description
+			docrender_content_description.innerText = data.project.description || "";
+		}
+		else if(docrender_topbar_title.textContent){
+			//标题
+			docrender_topbar_title.textContent = data.project.name || "";
+			docrender_content_title.textContent = data.project.name || "";
+			//副标题
+			docrender_content_subtitle.textContent = data.project.subtitle || "";
+			//description
+			docrender_content_description.textContent = data.project.description || "";
+		}
+		//how to use
+		try{
+			docrender_content_howtouse.innerHTML = markdown.toHTML(data.project.howto || "");
+		}
+		catch(e){}
+		//downloadlink
+		docrender_content_download.setAttribute("href",data.project.download || "#");
 		//渲染文档
 		docrender.render({
 			apiListWrapper:document.getElementById("apiList"),
 			apiContentWrapper:document.getElementById("apiContent")
 		},data);
+		//渲染标题
+
 		</script>
 	</body>
 </html>

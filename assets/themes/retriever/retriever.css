@@ -5,11 +5,11 @@
   http://www.apache.org/licenses/LICENSE-2.0
 */
 h1 {
-	font-family: 'Raleway', sans-serif;
+	font-family: 'arial', sans-serif;
 	font-weight:600;
 }
 h2, h3, h4, h5 {
-	font-family: 'Raleway', sans-serif;
+	font-family: 'arial', sans-serif;
 	font-weight:400;
 }
 .navbar-inner {
@@ -20,7 +20,7 @@ h2, h3, h4, h5 {
 	height:49px;
 }
 .navbar .brand {
-	font-family: 'Raleway', sans-serif;
+	font-family: 'arial', sans-serif;
 	font-size:30px;
 	font-size: 28px;
 	font-weight: 400;

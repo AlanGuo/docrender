@@ -156,13 +156,13 @@ function(exports) {
 
                 //api list
                 if (wrapperObject.apiListWrapper) {
-                    for (var i = 0; i < apiListElemArray.length; i++)
-                        wrapperObject.apiListWrapper.appendChild(apiListElemArray[i]);
+                    while (apiListElemArray.length)
+                        wrapperObject.apiListWrapper.appendChild(apiListElemArray[0]);
                 }
                 //api content
                 if (wrapperObject.apiContentWrapper) {
-                    for (var i = 0; i < apiContentElemArray.length; i++)
-                        wrapperObject.apiContentWrapper.appendChild(apiContentElemArray[i]);
+                    while (apiContentElemArray.length)
+                        wrapperObject.apiContentWrapper.appendChild(apiContentElemArray[0]);
                 }
             }
             return this;

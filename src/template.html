@@ -1,7 +1,7 @@
 <template name="docs.render.apilisttemplate">
-<% for(var item in data.classes){ %>
+<% for(var item in data.classes){ var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;});%>
 	<li class="nav-header"><%=item%></li>
-	<%for(var j = 0, api; api = data.classitems[j]; j++){if(api["class"]==item && api.name && api.access!="private"){%>
+	<%for(var j = 0, api; api = specificitems[j]; j++){%>
 	<li>
 		<a href="#<%=item + "." + (api.name||"")%>"><%=item + "." + (api.name||"")%>
 			<% if(api.isnew!=null){ %>
@@ -11,7 +11,7 @@
 			<% } %>
 		</a>
 	</li>
-<%}}}%>
+<%}}%>
 </template>
 <template name="docs.render.apicontenttemplate">
 <% for(var item in data.classes){var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;}); %>
