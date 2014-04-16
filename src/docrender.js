@@ -4,7 +4,8 @@ function(exports) {
     var tmpl = {
         apilisttemplate: docs.render.apilisttemplate,
         apicontenttemplate: docs.render.apicontenttemplate,
-        paramlisttemplate: docs.render.paramlisttemplate
+        paramlisttemplate: docs.render.paramlisttemplate,
+        changelogtemplate: docs.render.changelogtemplate
     }
 
     //模板方法
@@ -110,20 +111,20 @@ function(exports) {
             if (!wrapperObject) {
                 throw new Error("wrapperObject element needed");
             } else {
-                this.getStartRender(wrapperObject, data).apiRender(wrapperObject, data);
+                this.renderGetStart(wrapperObject, data).renderApi(wrapperObject, data);
             }
             return this;
         },
 
         /**
          * 渲染getStart
-         * @method getStartRender
+         * @method renderGetStart
          * @param {HTMLElement} wrapper 容器元素
          * @param {Object} data 渲染所需的数据
          * @return {Object} docrender
          * @for docrender
          */
-        getStartRender: function(wrapperObject, data) {
+        renderGetStart: function(wrapperObject, data) {
             if (!wrapperObject) {
                 throw new Error("wrapperObject element needed");
             } else {}
@@ -132,13 +133,13 @@ function(exports) {
 
         /**
          * 渲染api
-         * @method apiRender
+         * @method renderApi
          * @param {HTMLElement} wrapper 容器元素
          * @param {Object} data 渲染所需的数据
          * @return {Object} docrender
          * @for docrender
          */
-        apiRender: function(wrapperObject, data) {
+        renderApi: function(wrapperObject, data) {
             if (!wrapperObject) {
                 throw new Error("wrapperObject element needed");
             } else {
@@ -164,6 +165,58 @@ function(exports) {
                     while (apiContentElemArray.length)
                         wrapperObject.apiContentWrapper.appendChild(apiContentElemArray[0]);
                 }
+                //绑定实例运行按钮事件
+                $(".example-wrapper").unbind("mouseenter").unbind("mouseleave");
+                $(".example-wrapper").bind("mouseenter", function(evt) {
+                    $(this).find(".btn").css("display", "block");
+                }).bind("mouseleave", function(evt) {
+                    $(this).find(".btn").css("display", "none");
+                });
+            }
+            return this;
+        },
+
+        /**
+         * 渲染api
+         * @method renderChangelog
+         * @param {HTMLElement} wrapper 容器元素
+         * @param {Object} data 渲染所需的数据
+         * @return {Object} docrender
+         * @for docrender
+         */
+        renderChangelog: function(wrapperObject, data) {
+            //跑出所有的changelist
+            var vernumlist = [];
+            var changelog = [];
+            for (var i = 0; i < data.classitems.length; i++) {
+                var api = data.classitems[i];
+                if (api.changelist) {
+                    var verlist = api.changelist.match(/([^,]+?:[^,]+)/gi) || [];
+                    for (var j = 0; j < verlist.length; j++) {
+                        var verNum = (/(.+):/i).exec(verlist[j])[1];
+                        //数字
+                        if (vernumlist.indexOf(verNum) == -1)
+                            vernumlist.push(verNum);
+
+                        //日志
+                        changelog.push({
+                            version: verNum,
+                            api: api.class + "." + api.name,
+                            log: (/.+:(.+)/i).exec(verlist[j])[1]
+                        });
+                    }
+                }
+            }
+
+            if (wrapperObject.changelogWrapper) {
+                var html = jsTemplate(tmpl.changelogtemplate, {
+                    vernumlist: vernumlist.sort(function(a, b) {
+                        if (a < b) return true;
+                        else return false;
+                    }),
+                    changelog: changelog
+                });
+                wrapperObject.changelogWrapper.innerHTML = html;
             }
             return this;
         }

@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title id="docrender_title">文档渲染</title>
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/css/bootstrap.css">
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/css/bootstrap-responsive.css">
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/themes/retriever/retriever.css">
+		<link rel="stylesheet" type="text/css" href="http://115.29.195.88:85/assets/themes/retriever/retriever-custom.css">
+		<link rel="stylesheet" type="text/css" href="http://115.29.195.88:85/assets/css/lighteditor.css">
+		<style type="text/css">
+		#textarea{
+			border-radius: 0;
+			border: 1px solid #b2b2b2;
+			width: 80%;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="navbar" id="home">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="index.html" id="docrender_topbar_title"></a>
+
+					<div class="navbar-content">
+						<ul class="nav">
+							<li>
+								<a href="index.html#home">Home</a>
+							</li>
+							<li>
+								<a href="index.html#api">API</a>
+							</li>
+							<li>
+								<a href="./custom.html" target="_blank">Customize</a>
+							</li>
+							<li class="active">
+								<a href="./run.html" target="_blank">Run</a>
+							</li>
+							<li>
+								<a href="./changelog.html" target="_blank">ChangeLog</a>
+							</li>
+							<li>
+								<a href="./faq.html">FAQ</a>
+							</li>
+						</ul>
+					</div>
+					<div class="btn-group open"></div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div style="position:absolute;top:80px;bottom:20px;left:20px;right:20px">
+					<iframe width="100%" height="100%" id="jsfiddleframe" src="./JSFiddle.html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+				</div>
+			</div>
+		</div>
+		<script src="http://115.29.195.88:85/assets/js/jquery.min.js"></script>
+		<script src="http://115.29.195.88:85/assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="./data.json"></script>
+		<script type="text/javascript">
+			var docrender_topbar_title = document.getElementById("docrender_topbar_title");
+			var docrender_title = document.getElementById("docrender_title");
+
+			docrender_title.innerText = data.project.name+".Run" || "";
+			
+			//标题更新
+			if(docrender_topbar_title.innerText!=null){
+				//标题
+				docrender_topbar_title.innerText = data.project.name || "";
+			}
+			else if(docrender_topbar_title.textContent!=null){
+				//标题
+				docrender_topbar_title.textContent = data.project.name || "";
+			}
+			var editor = null;
+
+			//添加库引用
+			/*
+			var script = document.createElement("script");
+			script.src = data.project.download;
+			document.body.appendChild(script);
+			
+			//添加依赖
+			if(data.project.alis){
+				var alis = data.project.alis.split(",");
+				for(var i=0;i<alis.length;i++){
+					script = document.createElement("script");
+					script.src = alis[i];
+					document.body.appendChild(script);
+				}
+			}
+			*/
+			window.onload  = function(){
+				var textarea = document.getElementById("textarea");
+				var apiChain = window.location.hash.replace(/#/g,"");
+				var jsfiddleframe = document.getElementById("jsfiddleframe");
+				if(apiChain){
+					var classList = apiChain.split(".");
+					if(classList.length>1){
+						for(i=0;i<data.classitems.length;i++){
+							var item = data.classitems[i];
+							if(item.class == classList[classList.length-2] && item.name==classList[classList.length-1]){
+								//找到对应的元素
+								var domParser = new DOMParser();
+								var dom = domParser.parseFromString(item.example.join("").trim(),"text/html");
+
+								if(dom.body.innerHTML){
+									var scriptsArray = Array.prototype.slice.call(dom.body.querySelectorAll("script"));
+									var stylesArray = Array.prototype.slice.call(dom.body.querySelectorAll("style"));
+
+									var scriptsString = "",stylesString = "";
+									for(var i=0;i<scriptsArray.length;i++){
+										scriptsString += scriptsArray[i].innerText;
+										dom.body.removeChild(scriptsArray[i]);
+									}
+									for(var i=0;i<stylesArray.length;i++){
+										stylesString += stylesArray[i].innerText;
+										dom.body.removeChild(stylesArray[i]);
+									}
+									//加上lib的依赖
+									var script = document.createElement("script");
+									script.src = data.project.download;
+									dom.body.appendChild(script);
+
+									jsfiddleframe.contentWindow.Layout.editors.html.editor.setValue(dom.body.innerHTML.trim());
+									jsfiddleframe.contentWindow.Layout.editors.js.editor.setValue(scriptsString.trim());
+									jsfiddleframe.contentWindow.Layout.editors.css.editor.setValue(stylesString.trim());
+								}
+								else{
+									jsfiddleframe.contentWindow.Layout.editors.js.editor.setValue(item.example.join("").trim());
+								}
+								break;
+							}
+						}
+					}
+					else{
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

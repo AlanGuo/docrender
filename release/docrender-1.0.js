@@ -2,9 +2,10 @@
 
 function(exports) {
     var tmpl = {
-        apilisttemplate: /*<docs.render.apilisttemplate>*/'<% for(var item in data.classes){ var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;});%><li class="nav-header"><%=item%></li><%for(var j = 0, api; api = specificitems[j]; j++){%><li><a href="#<%=item + "." + (api.name||"")%>"><%=item + "." + (api.name||"")%><% if(api.isnew!=null){ %><span class="label label-success">New</span><% }else if(api.ismodify!=null){ %><span class="label label-info">Modify</span><% } %></a></li><%}}%>'/*</docs.render.apilisttemplate>*/,
-        apicontenttemplate: /*<docs.render.apicontenttemplate>*/'<% for(var item in data.classes){var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;}); %><h3 id="api.<%=item%>"><%=item.name%></h3><h4><%=data.classes[item].description || "" %></h4><table class="table table-striped table-hover table-bordered"><thead><tr><th>method&nbsp;<span class="badge"><%=specificitems.length %></span></th><th>details</th><th style="width: 60px;">v(iOS)</th><th style="width: 90px;">v(Android)</th></tr></thead><tbody><% for(var j = 0, api; api = specificitems[j]; j++){%><tr><td id="<%=item + "." + (api.name||"")%>"><%=api.name %>&nbsp;<% if(api.isnew!=null){ %><span class="label label-success">New</span><% }else if(api.ismodify!=null){ %><span class="label label-info">Modify</span><% } %></td><td><%=api.description || "" %><br/><br/><% if(api.params){for(var k = 0, p; p = api.params[k]; k++){ %>@param<span class="param-type">{<%=encodeHTML(p.type) %>}</span><span class="param-param" title="<%=getSupportTips(p.support)%>"><%=p.name %></span><% if(p.support!=null){ %><sup class="notice"></sup><% } %><%=p.type == "Function" ? getArguList(p.props) : ""%><span class="param-desc"><%=p.description || ""%></span><br/><% if(p.props){ %><%=getParamsList(p.props) %><% } %><% }}%><% if(api["return"]){var p =api["return"];%>@return<span class="param-type">{<%=encodeHTML(p.type) %>}</span><span class="param-param" title="<%=getSupportTips(p.support)%>"><%=p.name %></span><% if(p.support!=null){ %><sup class="notice"></sup><% } %><%=p.type == "Function" ? getArguList(p.props) : ""%><span class="param-desc"><%=p.description || ""%></span><br/><% if(p.props){ %><%=getParamsList(p.props) %><% } %><% }%><% if(api.remark){ %><%=api.remark %><% } %><% if(api.note){ %><div class="alert"><b>Note</b> &nbsp;<%=api.note %></div><% } %><% if(api.important){ %><div class="alert alert-error"><b>Important</b> &nbsp;<%=api.important %></div><% } %><% if(api.example){ %><span class="label label-info">Example</span><pre class="text-info"><%=api.example%></pre><% } %><% if(api.changelist){ %><span class="label label-important">ChangeList</span><ul><% var verlist=api.changelist.match(/([^,]+?:[^,]+)/gi)||[];for(var i=0;i<verlist.length;i++){ %><li><%="v" + (/(.+):/i).exec(verlist[i])[1] + ": " + (/.+:(.+)/i).exec(verlist[i])[1]%></li><% } %></ul><% } %></td><td><% if(api.support){ %><%="v" + (/ios:([^,]+)/i).exec(api.support)[1] %><% }else{ %><span class="label label-warning">Unsupported</span><% } %></td><td><% if(api.support){ %><%="v" + (/android:([^,]+)/i).exec(api.support)[1] %><% }else{ %><span class="label label-warning">Unsupported</span><% } %></td></tr><% } %></tbody></table><% } %>'/*</docs.render.apicontenttemplate>*/,
-        paramlisttemplate: /*<docs.render.paramlisttemplate>*/'<ul><% for(var n = 0, p; p = params[n]; n++){ %><li><span class="param-type"><%=p.type ? "{" + encodeHTML(p.type) + "}" : ""%></span><span class="param-param" title="<%=getSupportTips(p.support) %>"><%=p.name || ""%></span><% if(p.support){ %><sup class="notice"></sup><% } %><span class="param-desc"><%=p.desc || "" %></span></li><% if(p.params){ %><%=getParamsList(p.params) %><% } %><% } %></ul>'/*</docs.render.paramlisttemplate>*/
+        apilisttemplate: '<% for(var item in data.classes){ var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;});%><li class="nav-header"><%=item%></li><%for(var j = 0, api; api = specificitems[j]; j++){%><li><a href="#<%=item + "." + (api.name||"")%>"><%=item + "." + (api.name||"")%><% if(api.isnew!=null){ %><span class="label label-success">New</span><% }else if(api.ismodify!=null){ %><span class="label label-info">Modify</span><% } %></a></li><%}}%>',
+        apicontenttemplate: '<% var supportList=data.project.support.split(",");for(var item in data.classes){var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;}); %><h3 id="api.<%=item%>"><%=item.name%></h3><h4><%=data.classes[item].description || "" %></h4><table class="table table-striped table-hover table-bordered"><thead><tr><th>method&nbsp;<span class="badge"><%=specificitems.length %></span></th><th>details</th><%for(var k=0;k<supportList.length;k++){%><th style="">v(<%=supportList[k]%>)</th><%}%></tr></thead><tbody><% for(var j = 0, api; api = specificitems[j]; j++){%><tr><td id="<%=item + "." + (api.name||"")%>"><%=api.name %>&nbsp;<% if(api.isnew!=null){ %><span class="label label-success">New</span><% }else if(api.ismodify!=null){ %><span class="label label-info">Modify</span><% } %></td><td><%=api.description || "" %><br/><br/><% if(api.params){for(var k = 0, p; p = api.params[k]; k++){ %>@param<span class="param-type">{<%=encodeHTML(p.type) %>}</span><span class="param-param" title="<%=getSupportTips(p.support)%>"><%=p.name %></span><% if(p.support!=null){ %><sup class="notice"></sup><% } %><%=p.type == "Function" ? getArguList(p.props) : ""%><span class="param-desc"><%=p.description || ""%></span><br/><% if(p.props){ %><%=getParamsList(p.props) %><% } %><% }}%><% if(api["return"]){var p =api["return"];%>@return<span class="param-type">{<%=encodeHTML(p.type) %>}</span><span class="param-param" title="<%=getSupportTips(p.support)%>"><%=p.name %></span><% if(p.support!=null){ %><sup class="notice"></sup><% } %><%=p.type == "Function" ? getArguList(p.props) : ""%><span class="param-desc"><%=p.description || ""%></span><br/><% if(p.props){ %><%=getParamsList(p.props) %><% } %><% }%><% if(api.remark){ %><%=api.remark %><% } %><% if(api.note){ %><div class="alert"><b>Note</b> &nbsp;<%=api.note %></div><% } %><% if(api.important){ %><div class="alert alert-error"><b>Important</b> &nbsp;<%=api.important %></div><% } %><% if(api.example){ %><span class="label label-info">Example</span><div class="example-wrapper"><pre class="text-info"><%=$("<div/>").text(api.example).html()%></pre><a href="./run.html#<%=item%>.<%=api.name%>" target="_blank" class="btn btn-success" style="display:none;float:right;margin-top:-45px;margin-right:10px;">Run</a></div><% } %><% if(api.changelist){ %><span class="label label-important">ChangeList</span><ul><% var verlist=api.changelist.match(/([^,]+?:[^,]+)/gi)||[];for(var i=0;i<verlist.length;i++){ %><li><%="v" + (/(.+):/i).exec(verlist[i])[1] + ": " + (/.+:(.+)/i).exec(verlist[i])[1]%></li><% } %></ul><% } %></td><%for(var k=0;k<supportList.length;k++){var support = new RegExp(supportList[k]+":([^,]+)","i").exec(api.support);%><td><% if(support){ %><%="v(" + support[1]+")"%><% }else{ %><span class="label label-warning">N/A</span><% } %></td><%}%></tr><% } %></tbody></table><% } %>',
+        paramlisttemplate: '<ul><% for(var n = 0, p; p = params[n]; n++){ %><li><span class="param-type"><%=p.type ? "{" + encodeHTML(p.type) + "}" : ""%></span><span class="param-param" title="<%=getSupportTips(p.support) %>"><%=p.name || ""%></span><% if(p.support){ %><sup class="notice"></sup><% } %><span class="param-desc"><%=p.desc || "" %></span></li><% if(p.params){ %><%=getParamsList(p.params) %><% } %><% } %></ul>',
+        changelogtemplate: '<h1>ChangeLog</h1><ul><%for(var i=0;i<vernumlist.length;i++){%><li><h3>v<%=vernumlist[i]%></h3><ul><%for(var j=0;j<changelog.length;j++){if(changelog[j].version==vernumlist[i]){%><li><strong><%=changelog[j].api%>&nbsp;&nbsp;</strong><%=changelog[j].log%></li><%}}%></ul></li><%}%></ul>'
     }
 
     //模板方法
@@ -110,20 +111,20 @@ function(exports) {
             if (!wrapperObject) {
                 throw new Error("wrapperObject element needed");
             } else {
-                this.getStartRender(wrapperObject, data).apiRender(wrapperObject, data);
+                this.renderGetStart(wrapperObject, data).renderApi(wrapperObject, data);
             }
             return this;
         },
 
         /**
          * 渲染getStart
-         * @method getStartRender
+         * @method renderGetStart
          * @param {HTMLElement} wrapper 容器元素
          * @param {Object} data 渲染所需的数据
          * @return {Object} docrender
          * @for docrender
          */
-        getStartRender: function(wrapperObject, data) {
+        renderGetStart: function(wrapperObject, data) {
             if (!wrapperObject) {
                 throw new Error("wrapperObject element needed");
             } else {}
@@ -132,13 +133,13 @@ function(exports) {
 
         /**
          * 渲染api
-         * @method apiRender
+         * @method renderApi
          * @param {HTMLElement} wrapper 容器元素
          * @param {Object} data 渲染所需的数据
          * @return {Object} docrender
          * @for docrender
          */
-        apiRender: function(wrapperObject, data) {
+        renderApi: function(wrapperObject, data) {
             if (!wrapperObject) {
                 throw new Error("wrapperObject element needed");
             } else {
@@ -164,6 +165,58 @@ function(exports) {
                     while (apiContentElemArray.length)
                         wrapperObject.apiContentWrapper.appendChild(apiContentElemArray[0]);
                 }
+                //绑定实例运行按钮事件
+                $(".example-wrapper").unbind("mouseenter").unbind("mouseleave");
+                $(".example-wrapper").bind("mouseenter", function(evt) {
+                    $(this).find(".btn").css("display", "block");
+                }).bind("mouseleave", function(evt) {
+                    $(this).find(".btn").css("display", "none");
+                });
+            }
+            return this;
+        },
+
+        /**
+         * 渲染api
+         * @method renderChangelog
+         * @param {HTMLElement} wrapper 容器元素
+         * @param {Object} data 渲染所需的数据
+         * @return {Object} docrender
+         * @for docrender
+         */
+        renderChangelog: function(wrapperObject, data) {
+            //跑出所有的changelist
+            var vernumlist = [];
+            var changelog = [];
+            for (var i = 0; i < data.classitems.length; i++) {
+                var api = data.classitems[i];
+                if (api.changelist) {
+                    var verlist = api.changelist.match(/([^,]+?:[^,]+)/gi) || [];
+                    for (var j = 0; j < verlist.length; j++) {
+                        var verNum = (/(.+):/i).exec(verlist[j])[1];
+                        //数字
+                        if (vernumlist.indexOf(verNum) == -1)
+                            vernumlist.push(verNum);
+
+                        //日志
+                        changelog.push({
+                            version: verNum,
+                            api: api.class + "." + api.name,
+                            log: (/.+:(.+)/i).exec(verlist[j])[1]
+                        });
+                    }
+                }
+            }
+
+            if (wrapperObject.changelogWrapper) {
+                var html = jsTemplate(tmpl.changelogtemplate, {
+                    vernumlist: vernumlist.sort(function(a, b) {
+                        if (a < b) return true;
+                        else return false;
+                    }),
+                    changelog: changelog
+                });
+                wrapperObject.changelogWrapper.innerHTML = html;
             }
             return this;
         }

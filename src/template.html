@@ -14,7 +14,7 @@
 <%}}%>
 </template>
 <template name="docs.render.apicontenttemplate">
-<% for(var item in data.classes){var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;}); %>
+<% var supportList=data.project.support.split(",");for(var item in data.classes){var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;}); %>
 <h3 id="api.<%=item%>"><%=item.name%></h3>
 <h4><%=data.classes[item].description || "" %></h4>
 <table class="table table-striped table-hover table-bordered">
@@ -24,8 +24,9 @@
 			<span class="badge"><%=specificitems.length %></span>
 		</th>
 		<th>details</th>
-		<th style="width: 60px;">v(iOS)</th>
-		<th style="width: 90px;">v(Android)</th>
+		<%for(var k=0;k<supportList.length;k++){%>
+		<th style="">v(<%=supportList[k]%>)</th>
+		<%}%>
 	</tr>
 	</thead>
 	<tbody>
@@ -83,7 +84,10 @@
 			<% } %>
 			<% if(api.example){ %>
 			<span class="label label-info">Example</span>
-			<pre class="text-info"><%=api.example%></pre>
+			<div class="example-wrapper">
+			<pre class="text-info"><%=$("<div/>").text(api.example).html()%></pre>
+			<a href="./run.html#<%=item%>.<%=api.name%>" target="_blank" class="btn btn-success" style="display:none;float:right;margin-top:-45px;margin-right:10px;">Run</a>
+			</div>
 			<% } %>
 			<% if(api.changelist){ %>
 			<span class="label label-important">ChangeList</span>
@@ -94,20 +98,15 @@
 			</ul>
 			<% } %>
 		</td>
+		<%for(var k=0;k<supportList.length;k++){var support = new RegExp(supportList[k]+":([^,]+)","i").exec(api.support);%>
 		<td>
-			<% if(api.support){ %>
-			<%="v" + (/ios:([^,]+)/i).exec(api.support)[1] %>
+			<% if(support){ %>
+			<%="v(" + support[1]+")"%>
 			<% }else{ %>
-			<span class="label label-warning">Unsupported</span>
+			<span class="label label-warning">N/A</span>
 			<% } %>
 		</td>
-		<td>
-			<% if(api.support){ %>
-			<%="v" + (/android:([^,]+)/i).exec(api.support)[1] %>
-			<% }else{ %>
-			<span class="label label-warning">Unsupported</span>
-			<% } %>
-		</td>
+		<%}%>
 	</tr>
 	<% } %>
 	</tbody>
@@ -129,5 +128,20 @@
 		<%=getParamsList(p.params) %>
 		<% } %>
 		<% } %>
+	</ul>
+</template>
+<template name="docs.render.changelogtemplate">
+	<h1>ChangeLog</h1>
+	<ul>
+	<%for(var i=0;i<vernumlist.length;i++){%>
+		<li>
+			<h3>v<%=vernumlist[i]%></h3>
+			<ul>
+				<%for(var j=0;j<changelog.length;j++){if(changelog[j].version==vernumlist[i]){%>
+				<li><strong><%=changelog[j].api%>&nbsp;&nbsp;</strong><%=changelog[j].log%></li>
+				<%}}%>
+			</ul>
+		</li>
+	<%}%>
 	</ul>
 </template>

@@ -1,17 +1,18 @@
 var data = {
     "project": {
-        "file": "animate-1.1.js",
+        "file": "/home/alan/animate/animate-1.1.js",
         "line": 1,
         "description": "简单的线性动画库，在UI上提供基础的DOM动画能力",
         "name": "Animate",
         "subtitle": "v1.1",
-        "download": "../animate-1.1.js",
+        "download": "http://115.29.195.88:86/animate-1.1.js",
+        "support": "ie,chrome,firefox",
         "howto": "animate使用非常简单，你只需要添加关键帧，然后start就好了\n\n**举个例子**\n\n     <div id=\"aniDiv\" style=\"position:absolute\">动画实例</div>\n\n你有上面这样一个元素，想做一个曲线运动，那么js可以这么写\n\n     var ani = new window.Animate(document.getElementById(\"aniDiv\"));\n     ani.keyframe({point:0,left:\"0\",top:\"0\"})\n     .keyframe({point:500,left:\"100px\",top:\"100px\"})\n     .keyframe({point:1000,left:\"0px\",top:\"100px\"})\n     .start({timing:\"linear\"});\n\n用法灰常简单，大家可以尽情享用~",
         "author": "alandlguo\n2013/06/06"
     },
     "files": {
-        "animate-1.1.js": {
-            "name": "animate-1.1.js",
+        "/home/alan/animate/animate-1.1.js": {
+            "name": "/home/alan/animate/animate-1.1.js",
             "modules": {},
             "classes": {
                 "Animate": 1
@@ -32,57 +33,56 @@ var data = {
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "animate-1.1.js",
-            "line": 116,
+            "file": "/home/alan/animate/animate-1.1.js",
+            "line": 117,
             "description": "动画类",
-            "iphone_version": "8.9",
             "is_constructor": 1
         }
     },
     "classitems": [{
-        "file": "animate-1.1.js",
+        "file": "/home/alan/animate/animate-1.1.js",
         "line": 129,
         "description": "系统关键字",
         "access": "private",
         "tagname": "",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
+        "file": "/home/alan/animate/animate-1.1.js",
         "line": 135,
         "description": "事件",
         "access": "private",
         "tagname": "",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
+        "file": "/home/alan/animate/animate-1.1.js",
         "line": 141,
         "description": "当前动画使用的方法",
         "access": "private",
         "tagname": "",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
+        "file": "/home/alan/animate/animate-1.1.js",
         "line": 147,
         "description": "当前帧",
         "access": "private",
         "tagname": "",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
+        "file": "/home/alan/animate/animate-1.1.js",
         "line": 153,
         "description": "用来控制暂停",
         "access": "private",
         "tagname": "",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
+        "file": "/home/alan/animate/animate-1.1.js",
         "line": 159,
         "description": "初始化",
         "access": "private",
         "tagname": "",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
+        "file": "/home/alan/animate/animate-1.1.js",
         "line": 195,
         "description": "更换动画元素，动画本身不变",
         "itemtype": "method",
@@ -96,22 +96,24 @@ var data = {
             "description": "Animate",
             "type": "Object"
         },
+        "support": "ie:>=6,chrome:all,firefox:all",
         "example": [
-            "\nsetElement.set(document.body);"
+            "\n<div id=\"aniElem\"></div>\n<style>\n#aniElem{\n background:#f00;\n width:100px;\n height:100px;\n}\n</style>\n<script type=\"application/javascript\">\nvar ani = new Animate();\nani.setElement(document.getElementById(\"aniElem\"));\n</script>"
         ],
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 210,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 222,
         "description": "得到动画相关属性",
         "access": "private",
         "tagname": "",
         "itemtype": "method",
         "name": "_getProperty",
+        "support": "ie:>=6,chrome:all,firefox:all",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 225,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 238,
         "description": "设置关键帧",
         "itemtype": "method",
         "name": "keyframe",
@@ -124,18 +126,20 @@ var data = {
             "description": "this 返回当前Animate对象",
             "type": "Animate"
         },
+        "support": "ie:>=6,chrome:all,firefox:all",
+        "changelist": "0.1:参数变更",
         "example": [
-            "\nobj.keyframe({point:0\n\tleft:0,\n\ttop:0,\n\tease:\"linear\"\n}).keyframe({point:10,\n\tleft:'-100px',\n\ttop:'-100px',\n\tease:\"linear\"\n});\nobj.keyframe([{point:0,x:0,y:0},{...}]);"
+            "\n<div id=\"aniElem\"></div>\n<style>\n#aniElem{\n background:#f00;\n width:100px;\n height:100px;\n position:absolute;\n}\n</style>\n<script type=\"application/javascript\">\nvar ani = new Animate()\n.setElement(document.getElementById(\"aniElem\"))\n.keyframe([{point:0,\n left:0,\n top:0\n},{point:500,\n left:'100px',\n top:'100px'\n }]).start();\n</script>"
         ],
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 248,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 273,
         "description": "重置动画对象，清空关键帧",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 261,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 286,
         "description": "开始执行动画",
         "itemtype": "method",
         "name": "start",
@@ -149,16 +153,26 @@ var data = {
                 "type": "String"
             }]
         }],
-        "support": "ios:4.1,android:4.2",
+        "support": "ie:>=6,chrome:all,firefox:all",
+        "example": [
+            "\n<div id=\"aniElem\"></div>\n<style>\n#aniElem{\n background:#f00;\n width:100px;\n height:100px;\n position:absolute;\n}\n</style>\n<script type=\"application/javascript\">\nnew window.Animate(document.getElementById(\"aniElem\"))\n.keyframe([{point:0,\n left:0,\n top:0\n},{point:500,\n left:'100px',\n top:'100px'\n }]).start();\n</script>"
+        ],
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 514,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 559,
         "description": "清除动画相关信息",
+        "itemtype": "method",
+        "name": "clear",
+        "return": {
+            "description": "this 返回animate对象",
+            "type": "Animate"
+        },
+        "support": "ie:>=6,chrome:all,firefox:all",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 527,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 576,
         "description": "绑定事件",
         "itemtype": "method",
         "name": "on",
@@ -171,70 +185,122 @@ var data = {
             "description": "事件处理方法",
             "type": "Function"
         }],
+        "changelist": "1.1:新增",
+        "support": "ie:>=6,chrome:all,firefox:all",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 543,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 594,
         "description": "停止动画，下次将从第一帧开始动画",
+        "itemtype": "method",
+        "name": "stop",
+        "return": {
+            "description": "this 返回animate对象",
+            "type": "Animate"
+        },
+        "support": "ie:>=6,chrome:all,firefox:all",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 552,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 607,
         "description": "只支持time动画方式\n暂停动画，下次将继续动画",
+        "itemtype": "method",
+        "name": "pause",
+        "return": {
+            "description": "this 返回animate对象",
+            "type": "Animate"
+        },
+        "changelist": "1.1:新增",
+        "support": "ie:>=6,chrome:all,firefox:all",
         "class": "Animate"
     }, {
-        "file": "animate-1.1.js",
-        "line": 561,
+        "file": "/home/alan/animate/animate-1.1.js",
+        "line": 621,
         "description": "只支持time动画方式\n继续动画",
+        "itemtype": "method",
+        "name": "continuePlay",
+        "return": {
+            "description": "this 返回animate对象",
+            "type": "Animate"
+        },
+        "changelist": "1.1:新增",
+        "support": "ie:>=6,chrome:all,firefox:all",
         "class": "Animate"
     }],
     "warnings": [{
         "message": "unknown tag: name",
-        "line": " animate-1.1.js:1"
+        "line": " /home/alan/animate/animate-1.1.js:1"
     }, {
         "message": "unknown tag: subtitle",
-        "line": " animate-1.1.js:1"
+        "line": " /home/alan/animate/animate-1.1.js:1"
     }, {
         "message": "unknown tag: download",
-        "line": " animate-1.1.js:1"
-    }, {
-        "message": "unknown tag: howto",
-        "line": " animate-1.1.js:1"
+        "line": " /home/alan/animate/animate-1.1.js:1"
     }, {
         "message": "unknown tag: support",
-        "line": " animate-1.1.js:261"
+        "line": " /home/alan/animate/animate-1.1.js:1"
+    }, {
+        "message": "unknown tag: howto",
+        "line": " /home/alan/animate/animate-1.1.js:1"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:195"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:222"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:238"
+    }, {
+        "message": "unknown tag: changelist",
+        "line": " /home/alan/animate/animate-1.1.js:238"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:286"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:559"
+    }, {
+        "message": "unknown tag: changelist",
+        "line": " /home/alan/animate/animate-1.1.js:576"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:576"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:594"
+    }, {
+        "message": "unknown tag: changelist",
+        "line": " /home/alan/animate/animate-1.1.js:607"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:607"
+    }, {
+        "message": "unknown tag: changelist",
+        "line": " /home/alan/animate/animate-1.1.js:621"
+    }, {
+        "message": "unknown tag: support",
+        "line": " /home/alan/animate/animate-1.1.js:621"
     }, {
         "message": "Missing item type\n系统关键字",
-        "line": " animate-1.1.js:129"
+        "line": " /home/alan/animate/animate-1.1.js:129"
     }, {
         "message": "Missing item type\n事件",
-        "line": " animate-1.1.js:135"
+        "line": " /home/alan/animate/animate-1.1.js:135"
     }, {
         "message": "Missing item type\n当前动画使用的方法",
-        "line": " animate-1.1.js:141"
+        "line": " /home/alan/animate/animate-1.1.js:141"
     }, {
         "message": "Missing item type\n当前帧",
-        "line": " animate-1.1.js:147"
+        "line": " /home/alan/animate/animate-1.1.js:147"
     }, {
         "message": "Missing item type\n用来控制暂停",
-        "line": " animate-1.1.js:153"
+        "line": " /home/alan/animate/animate-1.1.js:153"
     }, {
         "message": "Missing item type\n初始化",
-        "line": " animate-1.1.js:159"
+        "line": " /home/alan/animate/animate-1.1.js:159"
     }, {
         "message": "Missing item type\n重置动画对象，清空关键帧",
-        "line": " animate-1.1.js:248"
-    }, {
-        "message": "Missing item type\n清除动画相关信息",
-        "line": " animate-1.1.js:514"
-    }, {
-        "message": "Missing item type\n停止动画，下次将从第一帧开始动画",
-        "line": " animate-1.1.js:543"
-    }, {
-        "message": "Missing item type\n只支持time动画方式\n暂停动画，下次将继续动画",
-        "line": " animate-1.1.js:552"
-    }, {
-        "message": "Missing item type\n只支持time动画方式\n继续动画",
-        "line": " animate-1.1.js:561"
+        "line": " /home/alan/animate/animate-1.1.js:273"
     }]
 }

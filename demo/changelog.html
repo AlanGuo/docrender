@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title id="docrender_title">文档渲染</title>
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/css/bootstrap.css">
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/css/bootstrap-responsive.css">
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/themes/retriever/retriever.css">
+		<link rel="stylesheet" type="text/css" href="http://115.29.195.88:85/assets/themes/retriever/retriever-custom.css">
+		<link rel="stylesheet" type="text/css" href="http://115.29.195.88:85/assets/css/lighteditor.css">
+		<style type="text/css">
+		#textarea{
+			border-radius: 0;
+			border: 1px solid #b2b2b2;
+			width: 80%;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="navbar" id="home">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="index.html" id="docrender_topbar_title"></a>
+
+					<div class="navbar-content">
+						<ul class="nav">
+							<li>
+								<a href="index.html#home">Home</a>
+							</li>
+							<li>
+								<a href="index.html#api">API</a>
+							</li>
+							<li>
+								<a href="./custom.html" target="_blank">Customize</a>
+							</li>
+							<li>
+								<a href="./run.html" target="_blank">Run</a>
+							</li>
+							<li class="active">
+								<a href="./changelog.html" target="_blank">ChangeLog</a>
+							</li>
+							<li>
+								<a href="./faq.html">FAQ</a>
+							</li>
+						</ul>
+					</div>
+					<div class="btn-group open"></div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div style="margin:0 auto;width:80%" id="changelog">
+					
+				</div>
+			</div>
+		</div>
+		<script src="http://115.29.195.88:85/assets/js/jquery.min.js"></script>
+		<script src="http://115.29.195.88:85/assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="http://115.29.195.88:85/release/docrender-1.0.js"></script>
+		<script type="text/javascript" src="./data.json"></script>
+		<script type="text/javascript">
+			var docrender_topbar_title = document.getElementById("docrender_topbar_title");
+			var docrender_title = document.getElementById("docrender_title");
+
+			docrender_title.innerText = data.project.name+".ChangeLog" || "";
+
+			docrender.renderChangelog({
+				changelogWrapper:document.getElementById("changelog")
+			},data);
+		</script>
+	</body>
+</html>
