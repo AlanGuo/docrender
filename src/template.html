@@ -82,11 +82,13 @@
 			<% if(api.important){ %>
 			<div class="alert alert-error"><b>Important</b> &nbsp;<%=api.important %></div>
 			<% } %>
-			<% if(api.example){ %>
+			<% if(api.examplerun || api.example){ %>
 			<span class="label label-info">Example</span>
 			<div class="example-wrapper">
-			<pre class="text-info"><%=$("<div/>").text(api.example).html()%></pre>
+			<pre class="text-info"><%=$("<div/>").text(api.examplerun || api.example).html()%></pre>
+			<%if(api.examplerun){%>
 			<a href="./run.html#<%=item%>.<%=api.name%>" target="_blank" class="btn btn-success" style="display:none;float:right;margin-top:-45px;margin-right:10px;">Run</a>
+			<%}%>
 			</div>
 			<% } %>
 			<% if(api.changelist){ %>

@@ -75,66 +75,67 @@
 			}
 			var editor = null;
 
-			//添加库引用
-			/*
-			var script = document.createElement("script");
-			script.src = data.project.download;
-			document.body.appendChild(script);
-			
-			//添加依赖
-			if(data.project.alis){
-				var alis = data.project.alis.split(",");
-				for(var i=0;i<alis.length;i++){
-					script = document.createElement("script");
-					script.src = alis[i];
-					document.body.appendChild(script);
-				}
-			}
-			*/
 			window.onload  = function(){
 				var textarea = document.getElementById("textarea");
 				var apiChain = window.location.hash.replace(/#/g,"");
 				var jsfiddleframe = document.getElementById("jsfiddleframe");
 				if(apiChain){
-					var classList = apiChain.split(".");
-					if(classList.length>1){
-						for(i=0;i<data.classitems.length;i++){
-							var item = data.classitems[i];
-							if(item.class == classList[classList.length-2] && item.name==classList[classList.length-1]){
-								//找到对应的元素
-								var domParser = new DOMParser();
-								var dom = domParser.parseFromString(item.example.join("").trim(),"text/html");
-
-								if(dom.body.innerHTML){
-									var scriptsArray = Array.prototype.slice.call(dom.body.querySelectorAll("script"));
-									var stylesArray = Array.prototype.slice.call(dom.body.querySelectorAll("style"));
-
-									var scriptsString = "",stylesString = "";
-									for(var i=0;i<scriptsArray.length;i++){
-										scriptsString += scriptsArray[i].innerText;
-										dom.body.removeChild(scriptsArray[i]);
-									}
-									for(var i=0;i<stylesArray.length;i++){
-										stylesString += stylesArray[i].innerText;
-										dom.body.removeChild(stylesArray[i]);
-									}
-									//加上lib的依赖
-									var script = document.createElement("script");
-									script.src = data.project.download;
-									dom.body.appendChild(script);
-
-									jsfiddleframe.contentWindow.Layout.editors.html.editor.setValue(dom.body.innerHTML.trim());
-									jsfiddleframe.contentWindow.Layout.editors.js.editor.setValue(scriptsString.trim());
-									jsfiddleframe.contentWindow.Layout.editors.css.editor.setValue(stylesString.trim());
+					var code = null;
+					//demo
+					if(apiChain == "project.demo"){
+						code = data.project.demo;
+					}
+					//api example
+					else{
+						var classList = apiChain.split(".");
+						if(classList.length>1){
+							for(i=0;i<data.classitems.length;i++){
+								var item = data.classitems[i];
+								if(item.class == classList[classList.length-2] && item.name==classList[classList.length-1]){
+									//找到对应的元素
+									code = item.examplerun.trim();
+									break;
 								}
-								else{
-									jsfiddleframe.contentWindow.Layout.editors.js.editor.setValue(item.example.join("").trim());
-								}
-								break;
 							}
 						}
 					}
+					var domParser = new DOMParser();
+					var dom = domParser.parseFromString(code,"text/html");
+
+					if(dom.body.innerHTML){
+						var scriptsArray = Array.prototype.slice.call(dom.body.querySelectorAll("script"));
+						var stylesArray = Array.prototype.slice.call(dom.body.querySelectorAll("style"));
+
+						var scriptsString = "",stylesString = "";
+						for(var i=0;i<scriptsArray.length;i++){
+							scriptsString += scriptsArray[i].innerText;
+							dom.body.removeChild(scriptsArray[i]);
+						}
+						for(var i=0;i<stylesArray.length;i++){
+							stylesString += stylesArray[i].innerText;
+							dom.body.removeChild(stylesArray[i]);
+						}
+						//加上lib的依赖
+						var script = document.createElement("script");
+						script.src = data.project.download;
+						dom.body.appendChild(script);
+
+						//添加依赖
+						if(data.project.alis){
+							var alis = data.project.alis.split(",");
+							for(var i=0;i<alis.length;i++){
+								script = document.createElement("script");
+								script.src = alis[i];
+								dom.body.appendChild(script);
+							}
+						}
+
+						jsfiddleframe.contentWindow.Layout.editors.html.editor.setValue(dom.body.innerHTML.trim());
+						jsfiddleframe.contentWindow.Layout.editors.js.editor.setValue(scriptsString.trim());
+						jsfiddleframe.contentWindow.Layout.editors.css.editor.setValue(stylesString.trim());
+					}
 					else{
+						jsfiddleframe.contentWindow.Layout.editors.js.editor.setValue(code);
 					}
 				}
 			}

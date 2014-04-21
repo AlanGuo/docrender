@@ -166,12 +166,14 @@ function(exports) {
                         wrapperObject.apiContentWrapper.appendChild(apiContentElemArray[0]);
                 }
                 //绑定实例运行按钮事件
-                $(".example-wrapper").unbind("mouseenter").unbind("mouseleave");
-                $(".example-wrapper").bind("mouseenter", function(evt) {
-                    $(this).find(".btn").css("display", "block");
-                }).bind("mouseleave", function(evt) {
-                    $(this).find(".btn").css("display", "none");
-                });
+                if($(".example-wrapper").find(".btn").length>0){
+                    $(".example-wrapper").unbind("mouseenter").unbind("mouseleave");
+                    $(".example-wrapper").bind("mouseenter", function(evt) {
+                        $(this).find(".btn").css("display", "block");
+                    }).bind("mouseleave", function(evt) {
+                        $(this).find(".btn").css("display", "none");
+                    });
+                }
             }
             return this;
         },
