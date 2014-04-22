@@ -2,7 +2,7 @@
 	projects: [	
 			{
 				name :  "docrender.js",
-				target : "../release/docrender-1.0.js",
+				target : "../release/docrender-0.0.2.js",
 				template:[
 					"../src/template.html"
 				],

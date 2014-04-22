@@ -1,3 +1,72 @@
+/**
+ * 基于yuidoc的一款文档渲染工具，结合docrunner可以实现自动化文档工具。
+ * @project
+ * @name DocRender
+ * @subtitle v0.0.2
+ * @download http://115.29.195.88:85/release/docrender-0.0.2.js
+ * @support ie,chrome,firefox
+ * @howto
+ * animate使用非常简单，你只需要添加关键帧，然后start就好了
+ *
+ * **举个例子**
+ *
+ *      //渲染文档
+        docrender.render({
+            apiListWrapper:document.getElementById("apiList"),
+            apiContentWrapper:document.getElementById("apiContent")
+        },data);
+ *
+ * @demo
+ * <div id="list"></div>
+ * <div id="content"></div>
+ * <style>
+ * #list{
+ *  float:left;
+ *  margin-right:20px; 
+ * }
+ * #content{
+ *  overflow:hidden  
+ * }
+ * </style>
+ * <script type="application/javascript">
+ * var data = {
+ *       "project": {
+ *       },
+ *       "classes": {
+ *           "Animate": {
+ *               "name": "Animate"
+ *           }
+ *       },
+ *       "classitems":[{
+ *           "file": "/home/alan/animate/animate-1.1.js",
+ *           "line": 216,
+ *           "description": "更换动画元素，动画本身不变",
+ *           "itemtype": "method",
+ *           "name": "setElement",
+ *           "params": [{
+ *               "name": "elem",
+ *               "description": "",
+ *               "type": "Dom"
+ *            }],
+ *            "return": {
+ *               "description": "Animate",
+ *               "type": "Object"
+ *            },
+ *            "support": "ie:>=6,chrome:all,firefox:all",
+ *            "example": [
+ *                "\nvar ani = new Animate();\nani.setElement(document.getElementById(\"aniElem\"));"
+ *            ],
+ *            "class": "Animate"
+ *       }]
+ * };
+ * docrender.render({
+ *     apiListWrapper:document.getElementById("list"),
+ *     apiContentWrapper:document.getElementById("content")
+ * },data);
+ *</script>
+ * @author alandlguo
+ * 2013/06/06
+ */
 ~
 
 function(exports) {
@@ -111,7 +180,7 @@ function(exports) {
             if (!wrapperObject) {
                 throw new Error("wrapperObject element needed");
             } else {
-                this.renderGetStart(wrapperObject, data).renderApi(wrapperObject, data);
+                this.renderGetStart(wrapperObject, {data:data}).renderApi(wrapperObject, {data:data});
             }
             return this;
         },
@@ -179,7 +248,7 @@ function(exports) {
         },
 
         /**
-         * 渲染api
+         * 渲染changeLog
          * @method renderChangelog
          * @param {HTMLElement} wrapper 容器元素
          * @param {Object} data 渲染所需的数据
