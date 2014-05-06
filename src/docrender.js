@@ -266,8 +266,8 @@ function(exports) {
                     for (var j = 0; j < verlist.length; j++) {
                         var verNum = (/(.+):/i).exec(verlist[j])[1];
                         //数字
-                        if (vernumlist.indexOf(verNum) == -1)
-                            vernumlist.push(verNum);
+                        if (vernumlist.indexOf(verNum.trim()) == -1)
+                            vernumlist.push(verNum.trim());
 
                         //日志
                         changelog.push({

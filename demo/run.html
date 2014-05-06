@@ -6,42 +6,38 @@
 		<link rel="stylesheet" href="http://115.29.195.88:85/assets/css/bootstrap.css">
 		<link rel="stylesheet" href="http://115.29.195.88:85/assets/css/bootstrap-responsive.css">
 		<link rel="stylesheet" href="http://115.29.195.88:85/assets/themes/retriever/retriever.css">
-		<link rel="stylesheet" type="text/css" href="http://115.29.195.88:85/assets/themes/retriever/retriever-custom.css">
-		<link rel="stylesheet" type="text/css" href="http://115.29.195.88:85/assets/css/lighteditor.css">
-		<style type="text/css">
-		#textarea{
-			border-radius: 0;
-			border: 1px solid #b2b2b2;
-			width: 80%;
-		}
-		</style>
+		<link rel="stylesheet" href="http://115.29.195.88:85/assets/themes/retriever/retriever-custom.css">
 	</head>
 	<body>
-		<div class="navbar" id="home">
+		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="index.html" id="docrender_topbar_title"></a>
+					<a class="brand" href="#" id="docrender_topbar_title"></a>
 
-					<div class="navbar-content">
+					<div class="navbar-content" id="home">
 						<ul class="nav">
-							<li>
-								<a href="index.html#home">Home</a>
+							<li class="active">
+								<a href="#home">Home</a>
 							</li>
 							<li>
-								<a href="index.html#api">API</a>
+								<a href="#api">API</a>
 							</li>
+							<!--
 							<li>
 								<a href="./custom.html" target="_blank">Customize</a>
 							</li>
-							<li class="active">
+							-->
+							<li>
 								<a href="./run.html" target="_blank">Run</a>
 							</li>
 							<li>
 								<a href="./changelog.html" target="_blank">ChangeLog</a>
 							</li>
+							<!--
 							<li>
 								<a href="./faq.html">FAQ</a>
 							</li>
+							-->
 						</ul>
 					</div>
 					<div class="btn-group open"></div>
@@ -50,95 +46,127 @@
 		</div>
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div style="position:absolute;top:80px;bottom:20px;left:20px;right:20px">
-					<iframe width="100%" height="100%" id="jsfiddleframe" src="./JSFiddle.html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+				<div class="span3">
+					<div class="span3 nav-container" style="width:auto">
+						<ul id="apiList" class="nav nav-pills nav-stacked">
+							<li>
+								<a href="#home">Home</a>
+							</li>
+							<li>
+								<a href="#howto">How to Use</a>
+							</li>
+							<li class="nav-header">API</li>
+						</ul>
+					</div>
+				</div>
+				<div class="span9" id="apiContent">
+					<div class="hero-unit" autocomplete="off">
+						<h1 id="docrender_content_title"></h1>
+
+						<h2 id="docrender_content_subtitle"></h2>
+
+						<p id="docrender_content_description">基于yuidoc输出的文档格式，重新组织与解析出易读易懂的帮助文档，风格使用Bootstrap，可支持换肤
+						</p>
+						<p></p>
+						<div class="alert alert-error" style="display:none" autocomplete="off" id="docrender_content_warning"></div>
+						<p class="pull-right">
+							<a href="#" download class="btn btn-success" id="docrender_content_download">下载</a>
+							<a href="#" download class="btn btn-success" id="docrender_uncompressed_download">下载未压缩版</a>
+							<a href="./custom.html" target="_blank" class="btn btn-primary">定制API</a>
+						</p>
+					</div>
+					<hr>
+					<h1 id="howto">HOW TO USE</h1>
+					<div id="docrender_content_howtouse"></div>
+					<div id="docrender_content_examplerun" style="display:none">
+						<span class="label label-info">Demo</span>
+						<div class="example-wrapper">
+						<pre class="text-info"></pre>
+						<a href="./run.html#project.demo" target="_blank" class="btn btn-success" style="display:none;float:right;margin-top:-45px;margin-right:10px;">Run</a>
+					</div>
+					<h1 id="api">API</h1>
+
 				</div>
 			</div>
 		</div>
 		<script src="http://115.29.195.88:85/assets/js/jquery.min.js"></script>
 		<script src="http://115.29.195.88:85/assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="http://115.29.195.88:85/release/docrender-0.0.2.js"></script>
+		<script type="text/javascript" src="http://115.29.195.88:85/assets/js/markdown.min.js"></script>
 		<script type="text/javascript" src="./data.json"></script>
 		<script type="text/javascript">
-			var docrender_topbar_title = document.getElementById("docrender_topbar_title");
-			var docrender_title = document.getElementById("docrender_title");
+		var docrender_topbar_title = document.getElementById("docrender_topbar_title");
+		var docrender_content_title = document.getElementById("docrender_content_title");
+		var docrender_content_subtitle = document.getElementById("docrender_content_subtitle");
+		var docrender_content_description = document.getElementById("docrender_content_description");
+		var docrender_content_download = document.getElementById("docrender_content_download");
+		var docrender_uncompressed_download = document.getElementById("docrender_uncompressed_download");
+		var docrender_content_howtouse = document.getElementById("docrender_content_howtouse");
+		var docrender_content_warning = document.getElementById("docrender_content_warning");
+		var docrender_title = document.getElementById("docrender_title");
+		var docrender_content_examplerun = document.getElementById("docrender_content_examplerun");
 
-			docrender_title.innerText = data.project.name+".Run" || "";
-			
-			//标题更新
-			if(docrender_topbar_title.innerText!=null){
-				//标题
-				docrender_topbar_title.innerText = data.project.name || "";
+		docrender_title.innerText = data.project.name || "";
+		
+		//标题更新
+		if(docrender_topbar_title.innerText!=null){
+			//标题
+			docrender_topbar_title.innerText = data.project.name || "";
+			docrender_content_title.innerText = data.project.name || "";
+			//副标题
+			docrender_content_subtitle.innerText = data.project.subtitle || "";
+			if(data.project.important){
+				docrender_content_warning.style.display = "";
+				docrender_content_warning.innerText = data.project.important;
 			}
-			else if(docrender_topbar_title.textContent!=null){
-				//标题
-				docrender_topbar_title.textContent = data.project.name || "";
+			//description
+			docrender_content_description.innerText = data.project.description || "";
+		}
+		else if(docrender_topbar_title.textContent!=null){
+			//标题
+			docrender_topbar_title.textContent = data.project.name || "";
+			docrender_content_title.textContent = data.project.name || "";
+			//副标题
+			docrender_content_subtitle.textContent = data.project.subtitle || "";
+			if(data.project.important){
+				docrender_content_warning.style.display = "";
+				docrender_content_warning.textContent = data.project.important;
 			}
-			var editor = null;
-
-			window.onload  = function(){
-				var textarea = document.getElementById("textarea");
-				var apiChain = window.location.hash.replace(/#/g,"");
-				var jsfiddleframe = document.getElementById("jsfiddleframe");
-				if(apiChain){
-					var code = null;
-					//demo
-					if(apiChain == "project.demo"){
-						code = data.project.demo;
-					}
-					//api example
-					else{
-						var classList = apiChain.split(".");
-						if(classList.length>1){
-							for(i=0;i<data.classitems.length;i++){
-								var item = data.classitems[i];
-								if(item.class == classList[classList.length-2] && item.name==classList[classList.length-1]){
-									//找到对应的元素
-									code = item.examplerun.trim();
-									break;
-								}
-							}
-						}
-					}
-					var domParser = new DOMParser();
-					var dom = domParser.parseFromString(code,"text/html");
-
-					if(dom.body.innerHTML){
-						var scriptsArray = Array.prototype.slice.call(dom.body.querySelectorAll("script"));
-						var stylesArray = Array.prototype.slice.call(dom.body.querySelectorAll("style"));
-
-						var scriptsString = "",stylesString = "";
-						for(var i=0;i<scriptsArray.length;i++){
-							scriptsString += scriptsArray[i].innerText;
-							dom.body.removeChild(scriptsArray[i]);
-						}
-						for(var i=0;i<stylesArray.length;i++){
-							stylesString += stylesArray[i].innerText;
-							dom.body.removeChild(stylesArray[i]);
-						}
-						//加上lib的依赖
-						var script = document.createElement("script");
-						script.src = data.project.download;
-						dom.body.appendChild(script);
-
-						//添加依赖
-						if(data.project.alis){
-							var alis = data.project.alis.split(",");
-							for(var i=0;i<alis.length;i++){
-								script = document.createElement("script");
-								script.src = alis[i];
-								dom.body.appendChild(script);
-							}
-						}
-
-						jsfiddleframe.contentWindow.Layout.editors.html.editor.setValue(dom.body.innerHTML.trim());
-						jsfiddleframe.contentWindow.Layout.editors.js.editor.setValue(scriptsString.trim());
-						jsfiddleframe.contentWindow.Layout.editors.css.editor.setValue(stylesString.trim());
-					}
-					else{
-						jsfiddleframe.contentWindow.Layout.editors.js.editor.setValue(code);
-					}
-				}
+			//description
+			docrender_content_description.textContent = data.project.description || "";
+		}
+		//how to use
+		try{
+			docrender_content_howtouse.innerHTML = markdown.toHTML(data.project.howto || "");
+			if(data.project.demo){
+				docrender_content_examplerun.style.display = "";
+				//填充demo
+				$(docrender_content_examplerun).find("pre").html($("<div/>").text(data.project.demo).html());
+				//绑定事件
+				var $exampleWrapper = $(docrender_content_examplerun).find(".example-wrapper");
+                $exampleWrapper.unbind("mouseenter").unbind("mouseleave");
+                $exampleWrapper.bind("mouseenter", function(evt) {
+                    $(this).find(".btn").css("display", "block");
+                }).bind("mouseleave", function(evt) {
+                    $(this).find(".btn").css("display", "none");
+                });
 			}
+		}
+		catch(e){}
+		//downloadlink
+		docrender_content_download.setAttribute("href",data.project.download || "#");
+		if(data.project.uncompressdownload)
+			docrender_uncompressed_download.setAttribute("href",data.project.uncompressdownload || "#");
+		else{
+			docrender_uncompressed_download.style.display = "none";
+		}
+		//渲染文档
+		docrender.render({
+			apiListWrapper:document.getElementById("apiList"),
+			apiContentWrapper:document.getElementById("apiContent")
+		},data);
+		//渲染标题
+
 		</script>
 	</body>
 </html>

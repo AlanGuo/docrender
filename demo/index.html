@@ -22,18 +22,22 @@
 							<li>
 								<a href="#api">API</a>
 							</li>
+							<!--
 							<li>
 								<a href="./custom.html" target="_blank">Customize</a>
 							</li>
+							-->
 							<li>
 								<a href="./run.html" target="_blank">Run</a>
 							</li>
 							<li>
 								<a href="./changelog.html" target="_blank">ChangeLog</a>
 							</li>
+							<!--
 							<li>
 								<a href="./faq.html">FAQ</a>
 							</li>
+							-->
 						</ul>
 					</div>
 					<div class="btn-group open"></div>
@@ -64,11 +68,13 @@
 						<p id="docrender_content_description">基于yuidoc输出的文档格式，重新组织与解析出易读易懂的帮助文档，风格使用Bootstrap，可支持换肤
 						</p>
 						<p></p>
-						<div class="alert alert-error" autocomplete="off" id="docrender_content_warning"></div>
+						<div class="alert alert-error" style="display:none" autocomplete="off" id="docrender_content_warning"></div>
 						<p class="pull-right">
 							<a href="#" download class="btn btn-success" id="docrender_content_download">下载</a>
 							<a href="#" download class="btn btn-success" id="docrender_uncompressed_download">下载未压缩版</a>
+							<!--
 							<a href="./custom.html" target="_blank" class="btn btn-primary">定制API</a>
+							-->
 						</p>
 					</div>
 					<hr>
@@ -111,10 +117,9 @@
 			docrender_content_title.innerText = data.project.name || "";
 			//副标题
 			docrender_content_subtitle.innerText = data.project.subtitle || "";
-			if(data.project.important)
+			if(data.project.important){
+				docrender_content_warning.style.display = "";
 				docrender_content_warning.innerText = data.project.important;
-			else{
-				docrender_content_warning.style.display = "none";
 			}
 			//description
 			docrender_content_description.innerText = data.project.description || "";
@@ -125,10 +130,9 @@
 			docrender_content_title.textContent = data.project.name || "";
 			//副标题
 			docrender_content_subtitle.textContent = data.project.subtitle || "";
-			if(data.project.important)
+			if(data.project.important){
+				docrender_content_warning.style.display = "";
 				docrender_content_warning.textContent = data.project.important;
-			else{
-				docrender_content_warning.style.display = "none";
 			}
 			//description
 			docrender_content_description.textContent = data.project.description || "";

@@ -135,15 +135,19 @@
 <template name="docs.render.changelogtemplate">
 	<h1>ChangeLog</h1>
 	<ul>
-	<%for(var i=0;i<vernumlist.length;i++){%>
-		<li>
-			<h3>v<%=vernumlist[i]%></h3>
-			<ul>
-				<%for(var j=0;j<changelog.length;j++){if(changelog[j].version==vernumlist[i]){%>
-				<li><strong><%=changelog[j].api%>&nbsp;&nbsp;</strong><%=changelog[j].log%></li>
-				<%}}%>
-			</ul>
-		</li>
+	<%if(vernumlist.length){%>
+		<%for(var i=0;i<vernumlist.length;i++){%>
+			<li>
+				<h3>v<%=vernumlist[i]%></h3>
+				<ul>
+					<%for(var j=0;j<changelog.length;j++){if(changelog[j].version==vernumlist[i]){%>
+					<li><strong><%=changelog[j].api%>&nbsp;&nbsp;</strong><%=changelog[j].log%></li>
+					<%}}%>
+				</ul>
+			</li>
+		<%}%>
+	<%}else{%>
+		<li>暂无ChangeLog</li>
 	<%}%>
 	</ul>
 </template>
