@@ -180,7 +180,11 @@ function(exports) {
             if (!wrapperObject) {
                 throw new Error("wrapperObject element needed");
             } else {
-                this.renderGetStart(wrapperObject, {data:data}).renderApi(wrapperObject, {data:data});
+                this.renderGetStart(wrapperObject, {
+                    data: data
+                }).renderApi(wrapperObject, {
+                    data: data
+                });
             }
             return this;
         },
@@ -235,7 +239,7 @@ function(exports) {
                         wrapperObject.apiContentWrapper.appendChild(apiContentElemArray[0]);
                 }
                 //绑定实例运行按钮事件
-                if($(".example-wrapper").find(".btn").length>0){
+                if ($(".example-wrapper").find(".btn").length > 0) {
                     $(".example-wrapper").unbind("mouseenter").unbind("mouseleave");
                     $(".example-wrapper").bind("mouseenter", function(evt) {
                         $(this).find(".btn").css("display", "block");
@@ -264,7 +268,7 @@ function(exports) {
                 if (api.changelist) {
                     var verlist = api.changelist.match(/([^,]+?:[^,]+)/gi) || [];
                     for (var j = 0; j < verlist.length; j++) {
-                        var verNum = (/(.+):/i).exec(verlist[j])[1];
+                        var verNum = (/(.+?):/i).exec(verlist[j])[1];
                         //数字
                         if (vernumlist.indexOf(verNum.trim()) == -1)
                             vernumlist.push(verNum.trim());
@@ -273,7 +277,7 @@ function(exports) {
                         changelog.push({
                             version: verNum,
                             api: api.class + "." + api.name,
-                            log: (/.+:(.+)/i).exec(verlist[j])[1]
+                            log: (/.+?:(.+)/i).exec(verlist[j])[1]
                         });
                     }
                 }

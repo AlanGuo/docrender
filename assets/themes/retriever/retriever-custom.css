@@ -27,10 +27,12 @@
 
 .param-type {
 	color: #09AEEE;
+	padding-left: .5em;
 }
 
 .param-param {
 	color: #108F10;
+	padding: 0 .5em;
 }
 
 .notice {

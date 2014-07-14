@@ -15,7 +15,7 @@
 </template>
 <template name="docs.render.apicontenttemplate">
 <% var supportList=data.project.support?data.project.support.split(","):[];for(var item in data.classes){var specificitems = data.classitems.filter(function(it){if(it["class"]==item && it.name && it.access!="private") return true;}); %>
-<h3 id="api.<%=item%>"><%=item.name%></h3>
+<h3 id="api.<%=item%>"><%=item%></h3>
 <h4><%=data.classes[item].description || "" %></h4>
 <table class="table table-striped table-hover table-bordered">
 	<thead>
@@ -124,10 +124,10 @@
 			<% if(p.support){ %>
 			<sup class="notice"></sup>
 			<% } %>
-			<span class="param-desc"><%=p.desc || "" %></span>
+			<span class="param-desc"><%=p.description || "" %></span>
 		</li>
-		<% if(p.params){ %>
-		<%=getParamsList(p.params) %>
+		<% if(p.params || p.props){ %>
+		<%=getParamsList(p.params || p.props) %>
 		<% } %>
 		<% } %>
 	</ul>
