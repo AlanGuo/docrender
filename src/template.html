@@ -94,8 +94,8 @@
 			<% if(api.changelist){ %>
 			<span class="label label-important">ChangeList</span>
 			<ul>
-				<% var verlist=api.changelist.match(/([^,]+?:[^,]+)/gi)||[];for(var i=0;i<verlist.length;i++){ %>
-				<li><%="v" + (/(.+):/i).exec(verlist[i])[1] + ": " + (/.+:(.+)/i).exec(verlist[i])[1]%></li>
+				<% var verlist=api.changelist.match(/([^,\\n]+?[:\\s][^,\\n]+)/gi)||[];for(var i=0;i<verlist.length;i++){ %>
+				<li><%="v" + (/(.+)?[:\s]/i).exec(verlist[i])[1] + ": " + (/.+?[:\\s](.+)/i).exec(verlist[i])[1]%></li>
 				<% } %>
 			</ul>
 			<% } %>

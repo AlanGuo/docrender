@@ -266,9 +266,9 @@ function(exports) {
             for (var i = 0; i < data.classitems.length; i++) {
                 var api = data.classitems[i];
                 if (api.changelist) {
-                    var verlist = api.changelist.match(/([^,]+?:[^,]+)/gi) || [];
+                    var verlist = api.changelist.match(/([^,\n]+?[:\s][^,\n]+)/gi) || [];
                     for (var j = 0; j < verlist.length; j++) {
-                        var verNum = (/(.+?):/i).exec(verlist[j])[1];
+                        var verNum = (/(.+?)[:\s]/i).exec(verlist[j])[1];
                         //数字
                         if (vernumlist.indexOf(verNum.trim()) == -1)
                             vernumlist.push(verNum.trim());
@@ -277,7 +277,7 @@ function(exports) {
                         changelog.push({
                             version: verNum,
                             api: api.class + "." + api.name,
-                            log: (/.+?:(.+)/i).exec(verlist[j])[1]
+                            log: (/.+?[:\s](.+)/i).exec(verlist[j])[1]
                         });
                     }
                 }
